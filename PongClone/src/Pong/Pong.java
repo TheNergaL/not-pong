@@ -7,24 +7,34 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Pong extends Applet implements Runnable, KeyListener {
+	/**
+	 * 
+	 */
 	Thread thread;
-	final int WIDTH = 1920, HEIGHT = 1080;
+	final int WIDTH = 700, HEIGHT = 500;
 	
 	HumanPaddle p1;
+	
+	Ball b1;
 
 	public void init() {
 		this.resize(WIDTH, HEIGHT);
 		thread = new Thread(this);
-		thread.start();
 		p1 = new HumanPaddle(1);
 		this.addKeyListener(this);
+		b1 = new Ball();
+		thread.start();
 		
 	}
 
 	public void paint(Graphics g) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		if (b1.getX() < -10 || b1.getX() > 710) {
+			g.drawString("Game Over", 350, 250);
+		}
 		p1.draw(g);
+		b1.draw(g);
 	}
 
 	public void update(Graphics g) {
@@ -32,11 +42,14 @@ public class Pong extends Applet implements Runnable, KeyListener {
 	}
 
 	public void run() {
-		for (;;) {
+		while (true) {
 
-			p1.move();
+		
+
 			
 			repaint();
+			p1.move();
+			b1.move();
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
