@@ -19,8 +19,11 @@ public class Pong extends Applet implements Runnable, KeyListener {
 	boolean begun;
 	Graphics gfx;
 	Image img;
+	int player_score, ai_score;
 
 	public void init() {
+		player_score = 0;
+		ai_score = 0;
 		begun = false;
 		img = createImage(WIDTH, HEIGHT);
 		gfx = img.getGraphics();
@@ -51,11 +54,33 @@ public class Pong extends Applet implements Runnable, KeyListener {
 			gfx.drawString("Totally Not Pong!", 340, 100);
 			gfx.drawString("Press Enter to Play", 340, 130);
 		}
-	g.drawImage(img, 0, 0, this);
+		g.drawImage(img, 0, 0, this);
 	}
 
 	public void update(Graphics g) {
 		paint(g);
+	}
+
+	public boolean checkRestart(Ball b) {
+		boolean restart = false;
+		b = b1;
+		if (b.getX() < 0) {
+			ai_score++;
+			restart = true;
+		}
+		if (b.getX() > 700) {
+			player_score++;
+			restart = true;
+		}
+		return restart;
+	}
+
+	public void reset() {
+		if (checkRestart(b1)) {
+			b1 = new Ball();
+			p1 = new HumanPaddle(1);
+			p2 = new AIPaddle(2, b1);
+		}
 	}
 
 	public void run() {
@@ -63,9 +88,10 @@ public class Pong extends Applet implements Runnable, KeyListener {
 			if (begun) {
 				repaint();
 				p1.move();
-				p2.move();
 				b1.move();
+				p2.move();
 				b1.checkCollision(p1, p2);
+				reset();
 			}
 			try {
 				Thread.sleep(10);
