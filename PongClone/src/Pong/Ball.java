@@ -10,20 +10,20 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-
 public class Ball {
 	double dx, dy, x, y;
+	int player_score, ai_score;
 	File boing = new File("../Externals/mario-boing.wav");
 	/* TODO: add player and AI scores/sounds */
 	File one_up = new File("../Externals/smb3_sound_effects_1_up.wav");
-	
+
 	private void playSound(File audio) throws IOException, UnsupportedAudioFileException {
 		try {
 			Clip sound = AudioSystem.getClip();
 			sound.open(AudioSystem.getAudioInputStream(audio));
 			sound.start();
 		} catch (LineUnavailableException e) {
-		
+
 			e.printStackTrace();
 		}
 	}
@@ -58,6 +58,7 @@ public class Ball {
 		if (y > 490) {
 			dy = -dy;
 		}
+
 	}
 
 	public void draw(Graphics g) {
