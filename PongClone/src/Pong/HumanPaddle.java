@@ -42,8 +42,15 @@ public class HumanPaddle implements Paddle {
 		} else if (dy <= -5) {
 			dy = -5;
 		}
-		y += dy; 
-		
+		if (y < 0) {
+			y = 0;
+		}
+		if (y > 420) {
+			y = 420;
+		}
+
+		y += dy;
+
 	}
 
 	public void setUp(boolean input) {
