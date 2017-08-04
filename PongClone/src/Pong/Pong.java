@@ -47,12 +47,15 @@ public class Pong extends Applet implements Runnable, KeyListener {
 			p1.draw(gfx);
 			b1.draw(gfx);
 			p2.draw(gfx);
+			gfx.drawString(String.valueOf(player_score), 10, 10);
+			gfx.drawString(String.valueOf(ai_score), 690, 10);
 		}
 
 		if (!begun) {
 			gfx.setColor(Color.white);
 			gfx.drawString("Totally Not Pong!", 340, 100);
 			gfx.drawString("Press Enter to Play", 340, 130);
+//			gfx.drawString(String.valueOf(player_score), 10, 10);
 		}
 		g.drawImage(img, 0, 0, this);
 	}
@@ -91,6 +94,8 @@ public class Pong extends Applet implements Runnable, KeyListener {
 				b1.move();
 				p2.move();
 				b1.checkCollision(p1, p2);
+				gfx.drawString(String.valueOf(player_score), 10, 10);
+				gfx.drawString(String.valueOf(ai_score), 10, 690);
 				reset();
 			}
 			try {
