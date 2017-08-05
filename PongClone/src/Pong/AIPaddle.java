@@ -9,6 +9,7 @@ public class AIPaddle implements Paddle {
 	int player, x;
 	final double GRAVITY = 0.94;
 	Ball b1;
+	int winCount = 0;
 
 	public AIPaddle(int player, Ball b) {
 		up = false;
@@ -31,7 +32,9 @@ public class AIPaddle implements Paddle {
 
 	public void move() {
 		y = b1.getY() - 40;
-		if (y < 0) {
+		if (y < 0)
+
+		{
 			y = 0;
 		}
 		if (y > 420) {

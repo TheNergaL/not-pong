@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
-
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
@@ -15,9 +14,8 @@ public class Ball {
 	int player_score, ai_score;
 	File boing = new File("../Externals/mario-boing.wav");
 	/* TODO: add player and AI scores/sounds */
-	File one_up = new File("../Externals/smb3_sound_effects_1_up.wav");
 
-	private void playSound(File audio) throws IOException, UnsupportedAudioFileException {
+	public void playSound(File audio) throws IOException, UnsupportedAudioFileException {
 		try {
 			Clip sound = AudioSystem.getClip();
 			sound.open(AudioSystem.getAudioInputStream(audio));
@@ -74,11 +72,13 @@ public class Ball {
 		return (int) y;
 	}
 
-	public void checkCollision(Paddle p1, Paddle p2) {
+	public boolean checkCollision(Paddle p1, Paddle p2) {
+		boolean bool = false;
 		if (x <= 50) {
 			if (y >= p1.getY() && y <= p1.getY() + 80) {
 				try {
 					playSound(boing);
+					bool = true;
 				} catch (IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
@@ -88,6 +88,7 @@ public class Ball {
 			if (y >= p2.getY() && y <= p2.getY() + 80) {
 				try {
 					playSound(boing);
+					bool = true;
 				} catch (IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
@@ -95,6 +96,7 @@ public class Ball {
 			}
 
 		}
+		return bool;
 	}
 
 }

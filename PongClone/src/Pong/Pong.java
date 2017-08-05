@@ -6,6 +6,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Pong extends Applet implements Runnable, KeyListener {
 	/**
@@ -20,6 +24,7 @@ public class Pong extends Applet implements Runnable, KeyListener {
 	Graphics gfx;
 	Image img;
 	int player_score, ai_score;
+	File one_up = new File("../Externals/smb3_sound_effects_1_up.wav");
 
 	public void init() {
 		player_score = 0;
@@ -55,7 +60,7 @@ public class Pong extends Applet implements Runnable, KeyListener {
 			gfx.setColor(Color.white);
 			gfx.drawString("Totally Not Pong!", 340, 100);
 			gfx.drawString("Press Enter to Play", 340, 130);
-//			gfx.drawString(String.valueOf(player_score), 10, 10);
+			// gfx.drawString(String.valueOf(player_score), 10, 10);
 		}
 		g.drawImage(img, 0, 0, this);
 	}
@@ -72,6 +77,12 @@ public class Pong extends Applet implements Runnable, KeyListener {
 			restart = true;
 		}
 		if (b.getX() > 700) {
+			try {
+				b1.playSound(one_up);
+			} catch (IOException | UnsupportedAudioFileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			player_score++;
 			restart = true;
 		}
